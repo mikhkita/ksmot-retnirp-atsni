@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta name="keywords" content=''>
+	<meta name="description" content=''>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+	<link rel="stylesheet" href="css/reset.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css">
+	<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="css/layout.css" type="text/css">
+
+	<meta name="viewport" content="width=1000">
+
+	<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/shop.js"></script>
+</head>
+<body>
+	<ul class="ps-lines">
+		<li class="v" style="margin-left:-471px"></li>
+		<li class="v" style="margin-left:470px"></li>
+		<li class="v" ></li>
+	</ul>
+	<div class="b b-header">
+		<div class="b-block">
+		<img src="i/logo.png" alt="">
+		</div>
+	</div>
+	<div class="b b-menu">
+		<div class="b-block clearfix">
+			<ul class="hor left clearfix">
+				<li class="active">Диски</li>
+				<li>Шины</li>
+				<li>Контакты</li>
+			</ul>
+			<form class="right" action="#" method="POST" novalidate="novalidate">
+				<input type="text" name="search" placeholder="Поиск">
+				<img src="i/search.png" alt="">
+			</form>
+		</div>
+	</div>
+	<div class="b b-main">
+		<div class="b-block clearfix">
+			<div class="b-main-filter left">
+				<div class="filter-cont">
+					<h2>Цена (руб)</h2>
+					<div class="slider-text clearfix">
+						<h3 class="left">от <span id="amount-l">1000<span></h3>
+						<h3 class="right" style="margin-right:7px;">до <span id="amount-r">36000<span></h3>
+					</div>
+					<div id="slider-range"></div>
+				</div>
+				<div class="filter-cont">
+					<h2>Состояние</h2>
+					<div class="check-cont">
+						<ul class="hor clearfix">
+							<li>
+								<input type="checkbox" id="sost-1">
+								<label class="clearfix" for="sost-1">
+									<span class="checked"></span>
+									<span class="default"></span>	
+									<h3>Б/у</h3>
+								</label>
+							</li>
+							<li>
+								<input type="checkbox" id="sost-2">
+								<label class="clearfix" for="sost-2">
+									<span class="checked"></span>
+									<span class="default"></span>
+									<h3>Как новый</h3>
+								</label>
+							</li>
+						</ul>
+					</div>	
+				</div>
+				<div class="filter-cont">
+					<h2>Состояние</h2>
+					<div class="check-cont">
+						<ul class="hor clearfix">
+							<li>
+								<input type="checkbox" id="sost-3">
+								<label class="clearfix" for="sost-3">
+									<span class="checked"></span>
+									<span class="default"></span>
+									<h3>Литой</h3>
+								</label>
+							</li>
+							<li>
+								<input type="checkbox" id="sost-4">
+								<label class="clearfix" for="sost-4">
+									<span class="checked"></span>
+									<span class="default"></span>
+									<h3>Кованый</h3>
+								</label>
+							</li>
+							<li>
+								<input type="checkbox" id="sost-5">
+								<label class="clearfix" for="sost-5">
+									<span class="checked"></span>
+									<span class="default"></span>
+									<h3>Штампованный</h3>
+								</label>
+							</li>
+						</ul>
+					</div>	
+				</div>
+			</div>
+			<div class="b-main-items left">
+				<ul>
+					<li class="clearfix">
+						<img class="left" src="i/item-1.jpg" alt="">
+						<div class="left">
+							<h3>Летняя Пара Yokohama DNA Ecos ES300 225/40/18 (Japan) б/п</h3>
+							<h4>7.5x18 ET37 114.30x5</h4>
+							<h5>12 000 руб.<span> + доставка 500 руб.</span></h5>
+						</div>
+					</li>
+					<li class="clearfix">
+						<img class="left" src="i/item-1.jpg" alt="">
+						<div class="left">
+							<h3>Летняя Пара Yokohama DNA Ecos ES300 225/40/18 (Japan) б/п</h3>
+							<h4>7.5x18 ET37 114.30x5</h4>
+							<h5>12 000 руб.<span> + доставка 500 руб.</span></h5>
+						</div>
+					</li>
+					<li class="clearfix">
+						<img class="left" src="i/item-1.jpg" alt="">
+						<div class="left">
+							<h3>Летняя Пара Yokohama DNA Ecos ES300 225/40/18 (Japan) б/п</h3>
+							<h4>7.5x18 ET37 114.30x5</h4>
+							<h5>12 000 руб.<span> + доставка 500 руб.</span></h5>
+						</div>
+					</li>
+				</ul>	
+			</div>	
+			<ul class="hor b-pagination clearfix">
+				<li><a href="">1</a></li>
+				<li><a href="">2</a></li>
+				<li><a href="">3</a></li>
+				<li><a href="">4</a></li>
+				<li><a href="">5</a></li>
+				<li class="points">...</li>
+				<li><a href="">10</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="b b-bottom">
+		<div class="b-block">
+			<h3>© 2015 Михайло и Ко</h3>
+		</div>
+	</div>
+	<div class="b b-5">
+		<div class="b-block">
+			
+		</div>
+	</div>
+	<div class="b b-6">
+		<div class="b-block">
+			
+		</div>
+	</div>
+	<div class="b b-7">
+		<div class="b-block">
+			
+		</div>
+	</div>
+	<div class="b b-8">
+		<div class="b-block">
+			
+		</div>
+	</div>
+	<div class="b b-9">
+		<div class="b-block">
+			
+		</div>
+	</div>
+<div style="display:none;">
+	<div id="b-popup-1">
+			<div class="for_all b-popup" >
+				<h3>Оставьте заявку</h3>
+				<h4>и наши специалисты<br>свяжутся с Вами в ближайшее время</h4>
+				<form action="kitsend.php" method="POST" id="b-form-1" data-block="#b-popup-1">
+					<div class="b-popup-form">
+						<label for="name">Введите Ваше имя</label>
+						<input type="text" id="name" name="name" required/>
+						<label for="tel">Введите Ваш номер телефона</label>
+						<input type="text" id="tel" name="phone" required/>
+						<input type="hidden" name="subject" value="Заказ"/>
+						<input type="submit" class="ajax b-orange-butt" value="Заказать">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="b-popup-2">
+			<div class="b-thanks b-popup">
+				<h3>Спасибо!</h3>
+				<h4>Ваша заявка успешно отправлена.<br/>Наш менеджер свяжется с Вами в течение часа.</h4>
+				<input type="submit" class="b-orange-butt" onclick="$.fancybox.close(); return false;" value="Закрыть">
+			</div>
+		</div>
+		<div id="b-popup-error">
+			<div class="b-thanks b-popup">
+				<h3>Ошибка отправки!</h3>
+				<h4>Приносим свои извинения. Пожалуйста, попробуйте отправить Вашу заявку позже.</h4>
+				<input type="submit" class="b-orange-butt" onclick="$.fancybox.close(); return false;" value="Закрыть">
+			</div>
+		</div>
+	</div>
+</body>
+</html>
