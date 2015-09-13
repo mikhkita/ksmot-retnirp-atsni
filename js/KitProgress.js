@@ -79,7 +79,7 @@ function KitProgress(c,h){
             if (tmp.now>=100){
                 tmp.elem.fadeOut(200);
                 clearInterval(tmp.timer);
-                callback();
+                if( typeof callback == "function" ) callback();
             }
         },tmp.delay);
     }

@@ -42,7 +42,7 @@ $(document).ready(function(){
                     str = "";
 
                 for( var i in json ){
-                    str += "<li data-id='"+json[i].id+"''><img src='"+json[i].image+"'><span data-time='"+(json[i].time)+"'>"+(json[i].time-curTime())+"</span></li>";
+                    str += "<li data-id='"+json[i].id+"''><img src='"+json[i].image+"'><span data-time='"+(json[i].time)+"'>"+(json[i].time-curTimeFunc())+"</span></li>";
                 }
 
                 $(".b-queue-list").append(str);
@@ -89,7 +89,7 @@ $(document).ready(function(){
                     },300);
 
                     for( var i in json.items ){
-                        var curTime = (json.items[i].time-curTime());
+                        var curTime = (json.items[i].time-curTimeFunc());
                         $(".b-queue-list li[data-id='"+json.items[i].id+"'] span").attr("data-time",json.items[i].time).text(curTime);
                     }
 
@@ -107,7 +107,7 @@ $(document).ready(function(){
 
     function updateTimer(){
         $(".b-queue-list li span").each(function(){
-            var time = $(this).attr("data-time")*1-curTime();
+            var time = $(this).attr("data-time")*1-curTimeFunc();
             $(this).text(time);
             if( time <= 0 ){
                 var $this = $(this).parents("li");
@@ -119,7 +119,7 @@ $(document).ready(function(){
         });
     }
 
-    function curTime(){
+    function curTimeFunc(){
         return Math.round($.now()/1000)-offset;
     }
 

@@ -55,7 +55,7 @@ class EventController extends Controller
 		$sql = "UPDATE `$tableName` SET print_time = print_time-15 WHERE print_time>".$model->print_time;
 		Yii::app()->db->createCommand($sql)->execute();
 
-		if( $model->status == 0 ){
+		if( $model && $model->status == 0 ){
 			$model->status = 4;
 			if( $model->save() ){
 				echo json_encode(array("result" => "success", "items" => $this->getItems($event_id,0,21)));
@@ -63,7 +63,8 @@ class EventController extends Controller
 				echo json_encode(array("result" => "error", "message" => "Ошибка удаления: удаление не удалось"));
 			}
 		}else{
-			echo json_encode(array("result" => "error", "message" => "Ошибка удаления: фотография уже ушла на печать"));
+			if( $model->status != 4 )
+				echo json_encode(array("result" => "error", "message" => "Ошибка удаления: фотография уже ушла на печать"));
 		}
 	}
 
