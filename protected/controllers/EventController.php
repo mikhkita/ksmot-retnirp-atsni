@@ -13,7 +13,7 @@ class EventController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('adminIndex','adminCreate','adminUpdate','adminDelete','adminQueue','adminRefresh','adminDeletePhoto','adminGenerate'),
+				'actions'=>array('adminIndex','adminCreate','adminUpdate','adminDelete','adminQueue','adminRefresh','adminDeletePhoto'),
 				'roles'=>array('admin'),
 			),
 			array('allow',
@@ -125,12 +125,6 @@ class EventController extends Controller
 			$photo->save();
 		}
 		Log::debug("Кончало отправки на печать");
-	}
-
-	public function actionAdminGenerate(){
-		$generator = new ImageGenerator();
-
-	    $img_path = $generator->generate("1.jpg","avatar.jpg","Mikhkita","Сегодня","ОлолоТрололоБольшойхэш","Томский политехнический универ","insta.png");
 	}
 
 	public function printImage($google,$printer_id,$img_path,$event_id){
@@ -285,12 +279,16 @@ class EventController extends Controller
 		   	$criteria = new CDbCriteria();
 			$criteria->order = "id DESC";
 			$condition = "event_id=".$event_id;
+
+			Log::debug("1");
 	
 			$criteria->condition = $condition;
 			$model_time = Photo::model()->find($criteria);		
 			if($model_time) {
 				$current_time = ( intval($model_time->print_time) > $current_time ) ? $model_time->print_time : $current_time;	
 			}	
+
+			Log::debug("2");
 
 			/* VK */
 		    $vk_url = "https://api.vk.com/method/photos.search";
@@ -301,18 +299,21 @@ class EventController extends Controller
 			);
 			$vk_url .='?'.urldecode(http_build_query($params));
 
+			Log::debug("3");
+
 			$criteria->condition = $condition." AND social_id=1";
 			$model = Photo::model()->find($criteria);
 			
 			if($model) {
-
+Log::debug("3_1");
 				$current_time = $this->vk_parse($event_id,$current_time,$delay,$vk_url,$start_time,40,true);
 
 			} else {
-				
+				Log::debug("3_2");
 				$current_time = $this->vk_parse($event_id,$current_time,$delay,$vk_url,$start_time,500);
 
 			}
+			Log::debug("4");
 
 			/* INSTAGRAM */
 			$inst_url = "https://api.instagram.com/v1/tags/".$event_tag."/media/recent";
@@ -328,12 +329,15 @@ class EventController extends Controller
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+			Log::debug("5");
 			if($model) {	
 
 				$inst_url .= "&MIN_TAG_ID=".$model->soc_key;
 				curl_setopt($ch, CURLOPT_URL, $inst_url); 
 		   	 	$temp = json_decode(curl_exec($ch));
 				$instagram = $temp->data;
+
+				Log::debug("6");
 
 				if(!empty($instagram)) {							
 					for ($i = count($instagram)-1; $i >= 0; $i--) { 
@@ -352,8 +356,10 @@ class EventController extends Controller
 						}
 					} 
 				}
+				Log::debug("7");
 
 			} else {
+				Log::debug("8");
 				$instagram = array();
 				$time = $start_time;
 				while ($time >= $start_time) {	
@@ -369,6 +375,7 @@ class EventController extends Controller
 					}	
 					if(count($instagram) > 500) $time = $start_time-1;			
 				}
+				Log::debug("9");
 				for ($i = count($instagram)-1; $i >= 0; $i--) { 
 					$current_time += $delay;
 					$model = new Photo;
@@ -382,6 +389,7 @@ class EventController extends Controller
 					$model->save(); 
 					
 				} 
+				Log::debug("10");
 			}
 			curl_close($ch);
 
@@ -397,19 +405,27 @@ class EventController extends Controller
 		    'start_time' => $start_time,
 		    'count' => $count
 		);
+		Log::debug("a1");
+		
 		$url .="&".urldecode(http_build_query($params));
-		$temp = json_decode(file_get_contents($url)); 
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30); 
+		curl_setopt($ch, CURLOPT_URL, $url); 
+		$temp = json_decode(curl_exec($ch));
+		curl_close($ch);
    	 	$vk = $temp->response->items;
-   	 	
    	 	if(!empty($vk)) { 
+   	 		Log::debug("a2");
 	   	 	$vk_users = array();
 	   	 	$vk_groups = array();
 	   	 	$photo = array();
-	   	 	$ch = curl_init();
+	    	$ch = curl_init();
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30);   
-
+			Log::debug("a3");
 	   	 	for ($i = count($vk)-1; $i >= 0; $i--) { 
 	   	 		$pos = strpos($vk[$i]->owner_id, "-");
 	   	 		if( $pos === false) {
@@ -419,7 +435,7 @@ class EventController extends Controller
 	   	 			$vk_groups[$vk[$i]->owner_id] = $vk[$i]->owner_id;
 	   	 		}
 	   	 	}
-	  
+	  Log::debug("a4");
 	   	 	if(!empty($vk_users)) {
 		   	 	$url = "https://api.vk.com/method/users.get?fields=photo_100&user_ids=".implode(",",$vk_users);
 		   	 	curl_setopt($ch, CURLOPT_URL, $url); 
@@ -430,6 +446,7 @@ class EventController extends Controller
 			   	 	}
 		   	 	}
 	   	 	}
+	   	 	Log::debug("a5");
 	   	 	if(!empty($vk_groups)) {
 				$url = "https://api.vk.com/method/groups.getById?fields=photo_100&group_ids=".implode(",",$vk_groups);
 		   	 	curl_setopt($ch, CURLOPT_URL, $url); 
@@ -441,7 +458,7 @@ class EventController extends Controller
 			   	}
 	   	 	}
 	   	 	curl_close($ch);
-
+Log::debug("a6");
 			for ($i = count($vk)-1; $i >= 0; $i--) { 
 				$name = $vk[$i]->photo_604;
 				if( $check === false || !Photo::model()->exists("name='".$name."' AND social_id=1 AND event_id=".$event_id) ) {
@@ -460,7 +477,9 @@ class EventController extends Controller
 					$check = false;
 				}
 			}
+			Log::debug("a7");
 		}
+		Log::debug("a8");
 		return $current_time;
 	}
 

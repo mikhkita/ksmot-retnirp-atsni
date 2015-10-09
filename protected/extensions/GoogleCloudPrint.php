@@ -194,22 +194,24 @@ class GoogleCloudPrint {
 			"print" => array(
 				"media_size" => array(
 					"width_microns" => 100000, 
-					"height_microns" => 150000, 
-					"vendor_id" => "psk:NorthAmerica4x6"
+					"height_microns" => 148000, 
+					"vendor_id" => "JPN_HAGAKI"
 				),
 				"margins" => array(
-		      		"top_microns" => 0,
+		      		"top_microns" => 3000,
 		      		"right_microns" => 0,
 		      		"bottom_microns" => 0,
 		      		"left_microns" => 0
 		      	),
 		      	"dpi" => array(
-		      		"vendor_id" => "cijns:High",
-		      		"vertical_dpi" => 300,
-			        "horizontal_dpi" => 300
+		      		"vendor_id" => "psk:High",
+		      		"vertical_dpi" => 360,
+			        "horizontal_dpi" => 360
 		      	)
 			)
 		);
+
+		// return false;
 		
 		// Prepare post fields for sending print
 		$post_fields = array(
