@@ -6,9 +6,9 @@ define('OFFSET_TOP_PERCENT', 10);
 define('AVATAR_WIDTH_PERCENT', 8);
 define('USERNAME_FONTSIZE_PERCENT', 3.7);
 define('PIP_HEIGHT_PERCENT', 4);
-define('MAX_LOGO_WIDTH_PERCENT', 35);
-define('MAX_LOGO_HEIGHT_PERCENT', 16);
-define('MAX_LOGO_WIDTH_PERCENT_DEV', 40);
+define('MAX_LOGO_WIDTH_PERCENT', 55);
+define('MAX_LOGO_HEIGHT_PERCENT', 14);
+define('MAX_LOGO_WIDTH_PERCENT_DEV', 30);
 define('MAX_LOGO_HEIGHT_PERCENT_DEV', 14);
 
 Class ImageGenerator {
@@ -29,7 +29,7 @@ Class ImageGenerator {
 		$username = (strlen($username)>20)?(substr($username, 0, 17)."..."):$username;
 
 		$a6width = 100;
-		$a6height = 150;
+		$a6height = 148;
 
 		// ширина и высота холста
 		$image_width = intval($a6width*8); // 720
@@ -49,39 +49,39 @@ Class ImageGenerator {
 
 		// Рисование аватарки
 		$avatar_size = intval($image_width*AVATAR_WIDTH_PERCENT/100);
-		$this->setImage($image_p, $this->openImage($avatar_filename), $margin, ($offset_top-$avatar_size)/2-$margin, $avatar_size );
+		$this->setImage($image_p, $this->openImage($avatar_filename), $margin+$margin/3.5, ($offset_top-$avatar_size)/2-$margin/1.6, $avatar_size );
 
 		// Рисование рамки аватарки
-		$this->setImage($image_p, $this->openImage($mask_filename), $margin, ($offset_top-$avatar_size)/2-$margin, $avatar_size );
+		$this->setImage($image_p, $this->openImage($mask_filename), $margin+$margin/3.5, ($offset_top-$avatar_size)/2-$margin/1.6, $avatar_size );
 
 		// Пользователь
-		imagettftext($image_p, $font_size, 0, ($avatar_size + $margin*2), (($offset_top-$font_size)/2+$font_size*0.98)-$margin*1.2, 0x12568C, $fontEng, $username);
+		imagettftext($image_p, $font_size, 0, ($avatar_size + $margin*2)+$margin/3.5, (($offset_top-$font_size)/2+$font_size*0.98)-$margin*0.8, 0x12568C, $fontEng, $username);
 
 		// Дата
 		$testbox = imagettfbbox($font_size*0.8, 0, $fontBold, $date);
-		imagettftext($image_p, $font_size*0.8, 0, $image_width-$margin-$testbox[2]-1, ($offset_top-$font_size*0.8)/2+$font_size*0.98*0.8-$margin*1.2, 0xa5a7aa, $fontBold, $date);
+		imagettftext($image_p, $font_size*0.8, 0, $image_width-$margin-$testbox[2]-1+$margin/3.5, ($offset_top-$font_size*0.8)/2+$font_size*0.98*0.8-$margin*0.8, 0xa5a7aa, $fontBold, $date);
 
 		// Рисование фотографии
-		$this->setImage($image_p, $this->openImage($filename), ($image_width-$photo_size)/2-1, $offset_top-$margin/2, $photo_size, $photo_size, true );
+		$this->setImage($image_p, $this->openImage($filename), ($image_width-$photo_size)/2+$margin/3.5, $offset_top-$margin/2, $photo_size, $photo_size, true );
 
 		// Рисование пипки
-		$this->setImage($image_p, $this->openImage($pip_filename), $margin, $photo_size + $offset_top + $margin, $image_height*PIP_HEIGHT_PERCENT/100 );
+		$this->setImage($image_p, $this->openImage($pip_filename), $margin+$margin/3.5, $photo_size + $offset_top + $margin, $image_height*PIP_HEIGHT_PERCENT/100 );
 
 		// Местоположение
-		imagettftext($image_p, $font_size*0.9, 0, $margin*2.8, ($photo_size + $offset_top + $margin*2.85), 0x12568C, $fontBold, $location);
+		imagettftext($image_p, $font_size*0.9, 0, $margin*2.8+$margin/3.5, ($photo_size + $offset_top + $margin*2.85), 0x12568C, $fontBold, $location);
 
 		// Хэштег
-		imagettftext($image_p, $font_size*0.9, 0, $margin, ($photo_size + $offset_top + $font_size*0.9 + $margin*4.15), 0x000000, $font, $hashtag);
+		imagettftext($image_p, $font_size*0.9, 0, $margin+$margin/3.5, ($photo_size + $offset_top + $font_size*0.9 + $margin*4.15), 0x000000, $font, $hashtag);
 
 		// Рисование логотипа эвента
 		$dev_width = intval($image_width*MAX_LOGO_WIDTH_PERCENT/100);
 		$dev_height = intval($image_height*MAX_LOGO_HEIGHT_PERCENT/100);
-		$this->setImage($image_p, $this->openImage($event_filename), -$margin, -$margin/1.5, $dev_width, $dev_height );
+		$this->setImage($image_p, $this->openImage($event_filename), -$margin+$margin/3.5, -$margin/1.5, $dev_width, $dev_height );
 
 		// Рисование логотипа разработчика
 		$dev_width = intval($image_width*MAX_LOGO_WIDTH_PERCENT_DEV/100);
 		$dev_height = intval($image_height*MAX_LOGO_HEIGHT_PERCENT_DEV/100);
-		$this->setImage($image_p, $this->openImage($this->dev_filename), $margin, -$margin/1.5, $dev_width, $dev_height );
+		$this->setImage($image_p, $this->openImage($this->dev_filename), $margin+$margin/3.5, -$margin/1.5, $dev_width, $dev_height );
 
 		$out_file = md5(rand()."asd".time());
 		// вывод

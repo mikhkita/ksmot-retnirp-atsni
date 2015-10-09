@@ -13,7 +13,7 @@ class EventController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('adminIndex','adminCreate','adminUpdate','adminDelete','adminQueue','adminRefresh','adminDeletePhoto'),
+				'actions'=>array('adminIndex','adminCreate','adminUpdate','adminDelete','adminQueue','adminRefresh','adminDeletePhoto','adminGenerate'),
 				'roles'=>array('admin'),
 			),
 			array('allow',
@@ -125,6 +125,12 @@ class EventController extends Controller
 			$photo->save();
 		}
 		Log::debug("Кончало отправки на печать");
+	}
+
+	public function actionAdminGenerate(){
+		$generator = new ImageGenerator();
+
+	    $img_path = $generator->generate("1.jpg","avatar.jpg","Mikhkita","Сегодня","ОлолоТрололоБольшойхэш","Томский политехнический универ","insta.png");
 	}
 
 	public function printImage($google,$printer_id,$img_path,$event_id){
